@@ -1,0 +1,21 @@
+{
+  "name": "spammer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "v0": "node v0.js",
+    "v1": "node v1.js",
+    "v2": "node v2.js",
+    "v3": "node v3.js",
+    "v4": "node v4.js",
+    "v5": "node v5.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@polkadot/api": "^10.11.2",
+    "@polkadot/util-crypto": "^12.6.2"
+  }
+}
