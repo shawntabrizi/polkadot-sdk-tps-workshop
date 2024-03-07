@@ -23,7 +23,7 @@ async function main() {
 	// Add account with URI
 	let alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
 
-	let { nonce: startingAccountNonce }  = await api.query.system.account(
+	let { nonce: startingAccountNonce } = await api.query.system.account(
 		alice.address
 	);
 
@@ -35,18 +35,12 @@ async function main() {
 			console.log((100 * i) / LIMIT, '%');
 		}
 		let txNonce = startingAccountNonce.toNumber() + i;
-		if (i % 2 == 0) {
-			txs.push(
-				await api.tx.templateModule.operational().signAsync(alice, { nonce: txNonce })
-			);
-		} else {
-			txs.push(
-				await api.tx.templateModule.null().signAsync(alice, { nonce: txNonce })
-			);
-		}
+		txs.push(
+			await api.tx.templateModule.noFeeWrite(i).signAsync(alice, { nonce: txNonce })
+		);
 	}
 
-	for(let i = 0; i < LIMIT; i ++) {
+	for (let i = 0; i < LIMIT; i++) {
 		await api.rpc.author.submitExtrinsic(txs[i]);
 	}
 
