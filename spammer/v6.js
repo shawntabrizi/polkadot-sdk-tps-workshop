@@ -20,24 +20,35 @@ async function main() {
 		`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`
 	);
 
-	// Add account with URI
-	let alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
+	let accounts = [];
+	let num_accounts = 1000;
 
-	let { nonce: startingAccountNonce } = await api.query.system.account(
-		alice.address
-	);
+	for (let i = 0; i < num_accounts; i += 1) {
+		let account = keyring.addFromUri(`//Alice//${i % num_accounts}`, { name: `${i} Account` });
+		let { nonce } = await api.query.system.account(
+			account.address
+		);
+
+		accounts.push({ account, nonce: nonce.toNumber() })
+	}
 
 	let txs = [];
 
 	// Create and sign transaction ahead of time
 	for (let i = 0; i < LIMIT; i += 1) {
+
+		let { account, nonce } = accounts[i % num_accounts];
+
+
 		if ((10 * i) % LIMIT == 0) {
 			console.log((100 * i) / LIMIT, '%');
 		}
-		let txNonce = startingAccountNonce.toNumber() + i;
+
 		txs.push(
-			await api.tx.templateModule.noFee().signAsync(alice, { nonce: txNonce })
+			await api.tx.templateModule.noFee().signAsync(account, nonce)
 		);
+
+		accounts[i % num_accounts].nonce += 1;
 	}
 
 	for (let i = 0; i < LIMIT; i++) {

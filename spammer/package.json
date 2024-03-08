@@ -10,6 +10,7 @@
     "v3": "node v3.js",
     "v4": "node v4.js",
     "v5": "node v5.js",
+    "v6": "node v6.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

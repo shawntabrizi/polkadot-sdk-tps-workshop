@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "node",
+    "runtime",
+]
+resolver = "2"
+[profile.release]
+panic = "unwind"
+
+[profile.production]
+inherits = "release"
+lto = true
+codegen-units = 1
