@@ -117,7 +117,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 /// up by `pallet_aura` to implement `fn slot_duration()`.
 ///
 /// Change this to adjust the block time.
-pub const MILLISECS_PER_BLOCK: u64 = BLOCK_TIME;
+pub const MILLISECS_PER_BLOCK: u64 = 6000;
 
 // NOTE: Currently it is not possible to change the slot duration after the chain has started.
 //       Attempting to do so will brick block production.
@@ -137,7 +137,6 @@ pub fn native_version() -> NativeVersion {
 // WORKSHOP
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(100);
 const EXECUTION_TIME: u64 = 2;
-const BLOCK_TIME: u64 = 6000;
 
 parameter_types! {
 	pub const BlockHashCount: BlockNumber = 2400;
