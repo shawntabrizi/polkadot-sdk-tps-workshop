@@ -38,3 +38,10 @@ super node (6 sec block time, 4 sec execution)
 		- 221 extrinsics, 36.33 TPS
 
 fast node (3 sec block time, 2 sec execution)
+	- pre-signed batch (100 tx each)
+		- almost fully saturated at 93%
+		- 169 extrinsics, 56.66 TPS
+	- pre-signed transfer keep alive
+		- not saturated at 61%
+		- 5338 extrinsics 1780 TPS
+	-

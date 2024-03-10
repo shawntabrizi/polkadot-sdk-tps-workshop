@@ -50,8 +50,10 @@ pub fn pre_funded_accounts(num: u32) -> Vec<AccountId> {
 		if i % ten_percent == 0 {
 			println!("Generating Accounts {} out of {}", i, num);
 		}
-		let seed = format!("Alice//{}", i);
-		accounts.push(get_account_id_from_seed::<sr25519::Public>(&seed));
+		let seed_alice = format!("Alice//{}", i);
+		let seed_bob = format!("Bob//{}", i);
+		accounts.push(get_account_id_from_seed::<sr25519::Public>(&seed_alice));
+		accounts.push(get_account_id_from_seed::<sr25519::Public>(&seed_bob));
 	}
 
 	return accounts
@@ -74,7 +76,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 				// Sudo account
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				// Pre-funded accounts
-				pre_funded_accounts(10_000),
+				pre_funded_accounts(0),
 				true,
 			)
 		},
