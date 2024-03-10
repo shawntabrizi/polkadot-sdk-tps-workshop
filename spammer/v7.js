@@ -1,7 +1,7 @@
 var { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
 var { cryptoWaitReady } = require('@polkadot/util-crypto');
 
-const LIMIT = 20_000;
+const LIMIT = 1_000;
 
 // Main function which needs to run at start
 async function main() {
@@ -22,16 +22,36 @@ async function main() {
 
 	// Add account with URI
 	let alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
+	let bob = keyring.addFromUri('//Bob', { name: 'Bob default' });
+	let oneUnit = 1_000_000_000_000;
 
 	let { nonce: startingAccountNonce } = await api.query.system.account(
 		alice.address
 	);
 
-	for (let i = 0; i < LIMIT; i++) {
-		let txNonce = startingAccountNonce.toNumber() + i;
+	let batch = [];
+	let batch_num = 100;
 
-		await api.tx.system.remark(i)
-			.signAndSend(alice, { nonce: txNonce });
+	for (let i = 0; i < batch_num; i += 1) {
+		batch.push(api.tx.balances.transferKeepAlive(bob.address, oneUnit))
+	}
+
+	let txs = [];
+
+	// Create and sign transaction ahead of time
+	for (let i = 0; i < LIMIT; i += 1) {
+		if ((10 * i) % LIMIT == 0) {
+			console.log((100 * i) / LIMIT, '%');
+		}
+		let txNonce = startingAccountNonce.toNumber() + i;
+		txs.push(
+			await api.tx.utility.batch(batch)
+				.signAsync(alice, { nonce: txNonce })
+		);
+	}
+
+	for (let i = 0; i < LIMIT; i++) {
+		await api.rpc.author.submitExtrinsic(txs[i]);
 	}
 
 	console.log('Done.');
