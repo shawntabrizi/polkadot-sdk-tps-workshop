@@ -23,19 +23,18 @@ async function main() {
 	// Add account with URI
 	let alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
 	let bob = keyring.addFromUri('//Bob', { name: 'Bob default' });
-	let charlie = keyring.addFromUri('//Charlie', { name: 'Charlie default' });
 
 	let oneUnit = 1_000_000_000_000;
 
-	let { nonce: startingAccountNonce }  = await api.query.system.account(
+	let { nonce: startingAccountNonce } = await api.query.system.account(
 		alice.address
 	);
 
-	for (let i = 0; i < LIMIT; i ++) {
+	for (let i = 0; i < LIMIT; i++) {
 		let txNonce = startingAccountNonce.toNumber() + i;
 
-		await api.tx.balances.transferKeepAlive(charlie.address, oneUnit)
-		.signAndSend(alice, { nonce: txNonce });
+		await api.tx.balances.transferKeepAlive(bob.address, oneUnit)
+			.signAndSend(alice, { nonce: txNonce });
 	}
 
 	console.log('Done.');

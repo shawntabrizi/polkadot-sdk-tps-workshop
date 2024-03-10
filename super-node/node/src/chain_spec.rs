@@ -36,6 +36,27 @@ pub fn authority_keys_from_seed(s: &str) -> (AuraId, GrandpaId) {
 	(get_from_seed::<AuraId>(s), get_from_seed::<GrandpaId>(s))
 }
 
+pub fn pre_funded_accounts(num: u32) -> Vec<AccountId> {
+	let mut accounts =	vec![
+		get_account_id_from_seed::<sr25519::Public>("Alice"),
+		get_account_id_from_seed::<sr25519::Public>("Bob"),
+		get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
+		get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
+	];
+
+	let ten_percent = num / 10;
+
+	for i in 0..num {
+		if i % ten_percent == 0 {
+			println!("Generating Accounts {} out of {}", i, num);
+		}
+		let seed = format!("Alice//{}", i);
+		accounts.push(get_account_id_from_seed::<sr25519::Public>(&seed));
+	}
+
+	return accounts
+}
+
 pub fn development_config() -> Result<ChainSpec, String> {
 	let wasm_binary = WASM_BINARY.ok_or_else(|| "Development wasm not available".to_string())?;
 
@@ -53,12 +74,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 				// Sudo account
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				// Pre-funded accounts
-				vec![
-					get_account_id_from_seed::<sr25519::Public>("Alice"),
-					get_account_id_from_seed::<sr25519::Public>("Bob"),
-					get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
-					get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
-				],
+				pre_funded_accounts(10_000),
 				true,
 			)
 		},

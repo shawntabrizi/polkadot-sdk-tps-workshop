@@ -22,6 +22,8 @@ async function main() {
 
 	// Add account with URI
 	let alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
+	let bob = keyring.addFromUri('//Bob', { name: 'Bob default' });
+	let oneUnit = 1_000_000_000_000;
 
 	let { nonce: startingAccountNonce } = await api.query.system.account(
 		alice.address
@@ -36,7 +38,8 @@ async function main() {
 		}
 		let txNonce = startingAccountNonce.toNumber() + i;
 		txs.push(
-			await api.tx.templateModule.null().signAsync(alice, { nonce: txNonce })
+			await api.tx.balances.transferKeepAlive(bob.address, oneUnit)
+				.signAsync(alice, { nonce: txNonce })
 		);
 	}
 

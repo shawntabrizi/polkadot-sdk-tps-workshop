@@ -1,7 +1,7 @@
 var { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
 var { cryptoWaitReady } = require('@polkadot/util-crypto');
 
-const LIMIT = 20_000;
+const LIMIT = 50_000;
 
 // Main function which needs to run at start
 async function main() {
@@ -23,7 +23,7 @@ async function main() {
 	// Add account with URI
 	let alice = keyring.addFromUri('//Alice', { name: 'Alice default' });
 
-	let { nonce: startingAccountNonce }  = await api.query.system.account(
+	let { nonce: startingAccountNonce } = await api.query.system.account(
 		alice.address
 	);
 
@@ -40,7 +40,7 @@ async function main() {
 		);
 	}
 
-	for(let i = 0; i < LIMIT; i ++) {
+	for (let i = 0; i < LIMIT; i++) {
 		await api.rpc.author.submitExtrinsic(txs[i]);
 	}
 

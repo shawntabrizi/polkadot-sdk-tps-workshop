@@ -64,10 +64,10 @@ impl<T: frame_system::Config> pallet_balances::WeightInfo for WeightInfo<T> {
 	/// Proof: `System::Account` (`max_values`: None, `max_size`: Some(128), added: 2603, mode: `MaxEncodedLen`)
 	fn transfer_keep_alive() -> Weight {
 		// WORKSHOP CUSTOM EDIT
-		Weight::from_parts(14_415_000, 0)
-			//.saturating_add(Weight::from_parts(0, 3593))
-			//.saturating_add(T::DbWeight::get().reads(1))
-			//.saturating_add(T::DbWeight::get().writes(1))
+		Weight::from_parts(20_415_000, 0)
+			.saturating_add(Weight::from_parts(0, 3593))
+			.saturating_add(T::DbWeight::get().reads(1))
+			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	/// Storage: `System::Account` (r:1 w:1)
 	/// Proof: `System::Account` (`max_values`: None, `max_size`: Some(128), added: 2603, mode: `MaxEncodedLen`)

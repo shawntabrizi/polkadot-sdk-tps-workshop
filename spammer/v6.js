@@ -21,9 +21,9 @@ async function main() {
 	);
 
 	let accounts = [];
-	let num_accounts = 1000;
+	let num_accounts = 10000;
 
-	for (let i = 0; i < num_accounts; i += 1) {
+	for (let i = 0; i < num_accounts + 1; i += 1) {
 		let account = keyring.addFromUri(`//Alice//${i % num_accounts}`, { name: `${i} Account` });
 		let { nonce } = await api.query.system.account(
 			account.address
@@ -45,7 +45,8 @@ async function main() {
 		}
 
 		txs.push(
-			await api.tx.templateModule.noFee().signAsync(account, nonce)
+			await api.tx.system.remark(i)
+				.signAsync(account, nonce)
 		);
 
 		accounts[i % num_accounts].nonce += 1;
