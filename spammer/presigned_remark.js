@@ -36,7 +36,8 @@ async function main() {
 		}
 		let txNonce = startingAccountNonce.toNumber() + i;
 		txs.push(
-			await api.tx.templateModule.noFee().signAsync(alice, { nonce: txNonce })
+			await api.tx.system.remark(`${txNonce}`)
+				.signAsync(alice, { nonce: txNonce })
 		);
 	}
 

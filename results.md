@@ -25,6 +25,10 @@ full block node
 	- pre-signed batch (100 tx each)
 		- full saturation 100%
 		- 182 extrinsics, 30.33 TPS
+	- stps
+		- full saturation 100%
+		- 8744 extrinsics, 1457 TPS
+
 
 super node (6 sec block time, 4 sec execution)
 	- real time generation of transfer keep alive
@@ -41,12 +45,12 @@ super node (6 sec block time, 4 sec execution)
 		- 497 extrinsics, 83.833 TPS
 
 fast node (3 sec block t2ime, 2 sec execution)
-	- pre-signed batch (100 tx each)
-		- almost fully saturated at 93%
-		- 169 extrinsics, 56.66 TPS
 	- pre-signed transfer keep alive
 		- not saturated at 61%
 		- 5338 extrinsics 1780 TPS
+	- pre-signed batch (100 tx each)
+		- almost fully saturated at 93%
+		- 169 extrinsics, 56.66 TPS
 	- pre-signed batch remark (1000 each)
-		- not fully saturated at 83%
-		- 497 extrinsics, 83.833 TPS
+		- not fully saturated at 86%
+		- 249 extrinsics, 83 TPS
