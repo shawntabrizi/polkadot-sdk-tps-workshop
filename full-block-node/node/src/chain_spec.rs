@@ -76,7 +76,7 @@ pub fn development_config() -> Result<ChainSpec, String> {
 				// Sudo account
 				get_account_id_from_seed::<sr25519::Public>("Alice"),
 				// Pre-funded accounts
-				pre_funded_accounts(0),
+				pre_funded_accounts(10_000),
 				true,
 			)
 		},
